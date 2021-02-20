@@ -32,16 +32,17 @@ async function fetchVehicleData(make, model, year) {
         .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
         .then(data => data);
     
-    // Logging output for now
-    console.log(vehicleData);
+    return vehicleData;
+
 }
 
-function capitalize(s) {
-    return s.charAt(0).toUpperCase() + s.slice(1);
+function getVehicleAttribute(vehicleData, attr) {
+    let path = attr.split("/");
+    let elem = vehicleData.getElementsByTagName(path[0]);
+
+    for (let i = 1; i < path.length; i++) {
+        elem = vehicleData.getElementsByTagName(path[i]);
+    }
+
+    return elem[0].textContent;
 }
-
-let model = "Kia";
-let make = "Soul";
-let year = "2018";
-
-fetchVehicleData(model, make, year);
