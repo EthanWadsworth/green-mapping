@@ -1,0 +1,17 @@
+#map {
+    width: 100%;
+    height: 400px;
+}
+
+.map-area {
+    height: auto;
+    width: auto;
+}
+
+.searchbar-form {
+    margin: auto;
+}
+
+.checkbox {
+    display: block;
+}
