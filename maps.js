@@ -5,7 +5,7 @@ let curr_transport_method;
 let rough_paths_arr = [];
 let all_transport_methods = [];
 let transport_methods_data = {}; // global variable that stores all transport method data from A to B
-let car_data = {};
+// let car_data = {};
 
 // TODO: - do not allow user to click on transportation buttons if they have not actually entered in any start and end yet
 
@@ -325,7 +325,7 @@ function calculateAllTransportationMethods(requestObj, directionsService, direct
         transport_methods_data = results;
         console.log("after promise resolution");
         console.log(transport_methods_data);
-        populateTable(transport_methods_data, car_data);
+        populateTable(transport_methods_data);
     })
 
     return transport_methods_data;
