@@ -49,6 +49,14 @@ body {
         display: block;
         width: 100%;
         float: none;
+        z-index: 0;
+    }
+
+    #map {
+        display: block;
+        /* position: absolute; */
+        top: 0px;
+        height: 60vh;
     }
 }
 
@@ -63,8 +71,8 @@ body {
 #transportation-buttons {
     z-index: 2;
     position: absolute;
-    top: 20%;
-    left: 7%;
+    top: 35%;
+    left: 4%;
 }
 
 #dashboard {
@@ -112,13 +120,18 @@ body {
 
 
 #place-search {
-    z-index: 2;
+    /* z-index: 2;
     position: absolute;
     max-width: 200px;
     top: 45vh;
-    left: 7vw;
+    left: 7vw; */
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
+.search-item {
+    margin-top: 10px;
+}
 
 
 
