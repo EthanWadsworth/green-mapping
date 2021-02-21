@@ -7,7 +7,7 @@ function capitalize(s) {
 
 // Returns distance in miles
 function parseDistance(distance) {
-    return parseInt(distance.replace(/\D/g, ""));
+    return parseFloat(distance.replace(/[ A-Za-z,]/g, ""));
 }
 
 // Returns time in hours

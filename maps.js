@@ -28,7 +28,7 @@ window.initMap = function() {
 
     directionsRenderer.setMap(map);
 
-    console.log(google.maps.TravelMode.DRIVING)
+    // console.log(google.maps.TravelMode.DRIVING)
     curr_transport_method = google.maps.TravelMode.DRIVING;
 
     // handles showing panel and directions when entering in two points
@@ -198,7 +198,6 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, start, 
     );
     // changeSelectedRoute();
     // console.log(document.querySelectorAll('[data-route-index]'));
-
     // let result = calculateAllTransportationMethods(requestObj, directionsService, directionsRenderer, method);
     // console.log(result);
 }
@@ -302,39 +301,60 @@ function calculateAllTransportationMethods(requestObj, directionsService, direct
     ];
 
     // go through every single one and compute 
-    transport_methods.forEach(method => {
-        requestObj.travelMode = method;
-        directionsService.route(requestObj,
+    Promise.all([
+        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[0], desired_method),
+        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[1], desired_method),
+        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[2], desired_method),
+        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[3], desired_method)
+    ])
+    .then(results => {
+        transport_methods_data = results;
+        console.log("after promise resolution");
+        console.log(transport_methods_data);
+        populateTable(transport_methods_data);
+    })
 
-        // callback to handle success or failure based on parameters above
-        (response, status) => {
+    return transport_methods_data;
+}
+
+// promise wrapper for calculateAllTransportationMethods
+const directionRoute = (directionsRenderer, directionsService, requestObj, method, desired_method) => {
+    return new Promise((resolve, reject) => {
+        directionsService.route(requestObj, (response, status) => {
             if (status === "OK") {
                 transport_methods_data[method] = response;
                 if (method == desired_method) {
                     drawDetailedDirections(directionsRenderer, response);
+                    resolve(response);
                 }
+                resolve(response);
             } else {
+                reject(status);
                 console.log("Could not log data into transport_methods_data");
             }
         })
     })
-
-    console.log(transport_methods_data);
 }
 
-function drawDetailedDirections(directionsRenderer, response) {
-    directionsRenderer.setMap(null);
+async function drawDetailedDirections(directionsRenderer, response) {
+    await directionsRenderer.setMap(null);
 
-    directionsRenderer.setOptions({
+    await directionsRenderer.setOptions({
         polylineOptions: {
             strokeColor: 'green'
         }
     });
 
-    directionsRenderer.setMap(map);
+    await directionsRenderer.setMap(map);
 
-    directionsRenderer.setDirections(response);
+    await directionsRenderer.setDirections(response);
 
     // try and draw lines for each route manually
     drawPolylines(response.routes);
+}
+
+async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array);
+    }
 }
