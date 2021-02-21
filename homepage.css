@@ -1,0 +1,75 @@
+body {
+	font-family: 'Dosis', sans-serif;
+	background-color: #DFE0E1 /*#14bf95*/;
+}
+
+#appname {
+	font-size:calc(100% + 4.5vw);
+	color: white;
+	font-family: 'PT Serif', serif;
+}
+
+.jumbotron {
+	padding: 20px;
+	height: 51vh;
+	margin-bottom: 0px;
+	background-image: url("https://www.umhs-adolescenthealth.org/wp-content/uploads/2016/12/google-map-background.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	box-shadow: 0 3000px rgba(0, 0, 0, 0.4) inset; 
+	align-items: center;
+	display: grid;
+ 
+}
+
+.text-overlay {
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+}
+
+#summary {
+	color: white;
+	font-size:calc(100% + 1vw);
+}
+
+#mission {
+	color: white;
+}
+
+.button-overlay {
+	width: 150px;
+}
+
+.features {
+	width: 97vw;
+}
+
+.icon {
+	/*background-color: #14bf95;*/
+	/*color: white;*/
+}
+
+.step-label {
+	text-align: center;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.inner-div {
+	background-color: /*#14bf95*/ white;
+	height: 49vh;
+	padding: 10px;
+	padding-top: 10%;
+}
+
+.feature-descript {
+	padding-top: 10px;
+	font-size:calc(100% + 1vw);
+}
+.description {
+	border-left: 2px solid #3498db;
+	padding-left: 2px;
+	font-size:calc(100% + 0.5vw);
+}
