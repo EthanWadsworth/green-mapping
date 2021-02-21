@@ -23,6 +23,7 @@ window.initMap = function() {
     map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 39.05350379726264, lng: -96.2940606852379 }, 
         zoom: 4,
+        mapTypeControl: false
     });
 
     directionsRenderer.setMap(map);
@@ -32,9 +33,9 @@ window.initMap = function() {
 
     // handles showing panel and directions when entering in two points
     directionsRenderer.setPanel(document.getElementById("directions-panel"));
-    const controller = document.querySelector(".searchbar-form");
-    controller.style.display = "block";
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(controller);
+    const controller = document.querySelector("#place-search");
+    // controller.style.display = "block";
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(controller);
 
 
     // work on plotting for method of transportation
@@ -44,6 +45,11 @@ window.initMap = function() {
         event.preventDefault();
         const starting_point = document.getElementById("starting-point");
         const destination = document.getElementById("destination");
+
+        // if one or both of the input fields is empty, do not let the user change the transportation method
+        if (!start_point.value || !destination.value) {
+            return;
+        }
 
         if (this.value == "walk") {
             calculateAndDisplayRoute(directionsService, directionsRenderer, starting_point, destination, google.maps.TravelMode.WALKING);
@@ -298,18 +304,6 @@ function calculateAllTransportationMethods(requestObj, directionsService, direct
         google.maps.TravelMode.TRANSIT, 
         google.maps.TravelMode.DRIVING
     ];
-
-    Promise.all([
-        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[0], desired_method),
-        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[1], desired_method),
-        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[2], desired_method),
-        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[3], desired_method)
-    ])
-    .then(results => {
-        transport_methods_data = results;
-        console.log("after promise resolution");
-        console.log(transport_methods_data);
-    })
 
     // go through every single one and compute 
     Promise.all([

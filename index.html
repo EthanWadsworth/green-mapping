@@ -13,40 +13,16 @@
 </head>
 <body>
     <section id="searchbar">
-        <!-- checkboxes for transportation method -->
-        <!-- <div class="control-group">
-            <div class="controls span2">
-                <label class="checkbox">
-                    <input type="checkbox" value="option1" id="inlineCheckbox1"> Car
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" value="option2" id="inlineCheckbox2"> Train
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" value="option3" id="inlineCheckbox3"> Plane
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" value="option3" id="inlineCheckbox3"> Bike
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" value="option3" id="inlineCheckbox3"> Walk
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" value="option3" id="inlineCheckbox3"> Boat
-                </label>
-            </div>
-        </div> -->
-
         <!-- input section for places -->
         <div id="place-search">
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-            <button type="submit" class="btn btn-primary mb-2" id="calc-route-btn">Calculate Route</button>
+            <input type="text" class="form-control search-item" id="starting-point" placeholder="Starting Location" aria-label="Username" aria-describedby="basic-addon1">
+            <input type="text" class="form-control search-item" id="destination" placeholder="Destination" aria-label="Username" aria-describedby="basic-addon1">
+            <button type="submit" class="btn btn-primary mb-2 search-item" id="calc-route-btn">Calculate Route</button>
         </div>
 
         </div>
 
-        <form class="form-inline searchbar-form">
+        <!-- <form class="form-inline searchbar-form">
             <div class="form-group mx-sm-3 mb-2">
                 <label for="starting-point" class="sr-only">Start</label>
                 <input type="text" class="form-control" id="starting-point" placeholder="Start">
@@ -56,7 +32,7 @@
                 <input type="text" class="form-control" id="destination" placeholder="End">
             </div>
             <button type="submit" class="btn btn-primary mb-2" id="calc-route-btn">Calculate Route</button>
-        </form>
+        </form> -->
 
         
         <div class="modal fade" id="locationsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -82,10 +58,10 @@
     </section>
 
     <section id="transportation-buttons">
-        <button type="button" value="walk" class="btn btn-primary walk-btn"><i class="fas fa-walking"></i></button>
-        <button type="button" value="cycle" class="btn btn-primary cycle-btn"><i class="fas fa-biking"></i></button>
-        <button type="button" value="vehicle" class="btn btn-primary vehicle-btn"><i class="fas fa-car"></i></button>
-        <button type="button" value="transit" class="btn btn-primary transit-btn"><i class="fas fa-subway"></i></button>
+        <button type="button" value="walk" class="btn btn-primary walk-btn" data-toggle="tooltip" data-placement="right" title="Walking"><i class="fas fa-walking"></i></button>
+        <button type="button" value="cycle" class="btn btn-primary cycle-btn" data-toggle="tooltip" data-placement="right" title="Cycling"><i class="fas fa-biking"></i></button>
+        <button type="button" value="vehicle" class="btn btn-primary vehicle-btn"><i class="fas fa-car" data-toggle="tooltip" data-placement="right" title="Driving"></i></button>
+        <button type="button" value="transit" class="btn btn-primary transit-btn" data-toggle="tooltip" data-placement="right" title="Transit"><i class="fas fa-subway"></i></button>
         <!-- <button type="button" value="flights" class="btn btn-primary flights-btn">Flights</button> -->
     </section>
 
