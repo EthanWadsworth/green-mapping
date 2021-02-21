@@ -364,7 +364,7 @@ async function drawDetailedDirections(directionsRenderer, response) {
     await directionsRenderer.setDirections(response);
 
     // try and draw lines for each route manually
-    drawPolylines(response.routes);
+    // drawPolylines(response.routes);
 }
 
 async function asyncForEach(array, callback) {
