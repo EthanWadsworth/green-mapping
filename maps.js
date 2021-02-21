@@ -27,7 +27,7 @@ window.initMap = function() {
 
     directionsRenderer.setMap(map);
 
-    console.log(google.maps.TravelMode.DRIVING)
+    // console.log(google.maps.TravelMode.DRIVING)
     curr_transport_method = google.maps.TravelMode.DRIVING;
 
     // handles showing panel and directions when entering in two points
@@ -197,7 +197,6 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, start, 
     );
     // changeSelectedRoute();
     // console.log(document.querySelectorAll('[data-route-index]'));
-
     // let result = calculateAllTransportationMethods(requestObj, directionsService, directionsRenderer, method);
     // console.log(result);
 }
@@ -313,29 +312,20 @@ function calculateAllTransportationMethods(requestObj, directionsService, direct
     })
 
     // go through every single one and compute 
-    // asyncForEach(transport_methods, async (method) => {
-    //     requestObj.travelMode = method;
-    //     transport_methods_data[method] = await directionRoute(directionsRenderer, directionsService, requestObj, method, desired_method);
-    // })
-    console.log("outside promises");
-    console.log(transport_methods_data);
-    // transport_methods.forEach(async method => {
-    //     requestObj.travelMode = method;
-    //     transport_methods_data[method] = await directionRoute(directionsRenderer, directionsService, requestObj, method, desired_method);
-    //     // directionsService.route(requestObj,
+    Promise.all([
+        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[0], desired_method),
+        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[1], desired_method),
+        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[2], desired_method),
+        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[3], desired_method)
+    ])
+    .then(results => {
+        transport_methods_data = results;
+        console.log("after promise resolution");
+        console.log(transport_methods_data);
+        populateTable(transport_methods_data);
+    })
 
-    //     // // callback to handle success or failure based on parameters above
-    //     // (response, status) => {
-    //     //     if (status === "OK") {
-    //     //         transport_methods_data[method] = response;
-    //     //         if (method == desired_method) {
-    //     //             drawDetailedDirections(directionsRenderer, response);
-    //     //         }
-    //     //     } else {
-    //     //         console.log("Could not log data into transport_methods_data");
-    //     //     }
-    //     // })
-    // })
+    return transport_methods_data;
 }
 
 // promise wrapper for calculateAllTransportationMethods
@@ -357,7 +347,6 @@ const directionRoute = (directionsRenderer, directionsService, requestObj, metho
     })
 }
 
-
 async function drawDetailedDirections(directionsRenderer, response) {
     await directionsRenderer.setMap(null);
 
@@ -373,4 +362,10 @@ async function drawDetailedDirections(directionsRenderer, response) {
 
     // try and draw lines for each route manually
     drawPolylines(response.routes);
+}
+
+async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array);
+    }
 }
