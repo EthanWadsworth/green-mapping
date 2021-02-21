@@ -66,6 +66,9 @@ function populateTable(response) {
         document.querySelector(".transit-btn").click();
     }
 
-    proposal.innerHTML = "<h1>" + msg + "</h1>";
+    
+    document.querySelector(".modal-body").innerHTML = msg;
+    $('#suggestionModal').modal('show'); 
+    // proposal.innerHTML = "<h1>" + msg + "</h1>";
 
 }
