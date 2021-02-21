@@ -1,6 +1,6 @@
 function populateTable(response) {
 
-    document.getElementById("route-info-table-container").innerHTML = "<table id=\"route-info-table\"><tr><th style=\"width:50%\">Method of Transport</th><th>Distance (mi)</th><th>Expected Duration (hrs)</th><th>Expected Duration in Traffic (hrs)</th><th>Carbon Footprint (Moles of CO2)</th><th>Gas Used (gallons)</th></tr><tr><td><b>Car</b></td><td></td><td></td><td></td><td>?</td><td>?</td></tr><tr><td><b>Transit</b></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td><b>Walking</b></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td><b>Cycling</b></td><td></td><td></td><td></td><td></td><td></td></tr></table>";
+    document.getElementById("route-info-table-container").innerHTML = "<table id=\"route-info-table\" class=\"table-responsive\"><tr><th style=\"width:50%\">Method of Transport</th><th>Distance (mi)</th><th>Expected Duration (hrs)</th><th>Expected Duration in Traffic (hrs)</th><th>Carbon Footprint (Moles of CO2)</th><th>Gas Used (gallons)</th></tr><tr><td><b>Car</b></td><td></td><td></td><td></td><td>?</td><td>?</td></tr><tr><td><b>Transit</b></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td><b>Walking</b></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td><b>Cycling</b></td><td></td><td></td><td></td><td></td><td></td></tr></table>";
     let proposal = document.getElementById("route-proposal-container");
     let table = document.getElementById("route-info-table");
 

@@ -158,14 +158,14 @@ window.initMap = function() {
     let endpoint = document.getElementById("destination");
 
     // setting up the Autocomplete objects and event listeners
-    //   const autocomplete_starting_point = new google.maps.places.Autocomplete(start_point, options);
-    //   const autocomplete_destination = new google.maps.places.Autocomplete(endpoint, options);
+    const autocomplete_starting_point = new google.maps.places.Autocomplete(start_point, options);
+    const autocomplete_destination = new google.maps.places.Autocomplete(endpoint, options);
 
     // elements that handle all events
     document.getElementById("calc-route-btn").addEventListener("click", onClick);
 
-    //   autocomplete_starting_point.addListener("place_changed", onStartPointChanged);
-    //   autocomplete_destination.addListener("place_changed", onDestinationChanged);
+    autocomplete_starting_point.addListener("place_changed", onStartPointChanged);
+    autocomplete_destination.addListener("place_changed", onDestinationChanged);
 };
 
 // Append the 'script' element to 'head'
@@ -217,7 +217,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, start, 
 
 // callback function for event listener for autocomplete - need to change so it works with both start and end
 function onStartPointChanged(event) {
-    event.preventDefault();
+    // event.preventDefault();
     const place = this.getPlace();
 
     if (!place.geometry) {
@@ -228,7 +228,7 @@ function onStartPointChanged(event) {
 }
 
 function onDestinationChanged(event) {
-    event.preventDefault();
+    // event.preventDefault();
     const place = this.getPlace();
 
     if (!place.geometry) {
