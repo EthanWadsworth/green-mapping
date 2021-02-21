@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="index.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/ed43ac3da1.js" crossorigin="anonymous"></script>
     <title>Green Mapping Home</title>
 </head>
 <body>
-    <section id="searchbar" class="container">
+    <section id="searchbar">
         <!-- checkboxes for transportation method -->
-        <div class="control-group">
+        <!-- <div class="control-group">
             <div class="controls span2">
                 <label class="checkbox">
                     <input type="checkbox" value="option1" id="inlineCheckbox1"> Car
@@ -33,7 +34,7 @@
                     <input type="checkbox" value="option3" id="inlineCheckbox3"> Boat
                 </label>
             </div>
-        </div>
+        </div> -->
 
         <form class="form-inline searchbar-form">
             <div class="form-group mx-sm-3 mb-2">
@@ -71,19 +72,24 @@
     </section>
 
     <section id="transportation-buttons">
-        <button type="button" value="walk" class="btn btn-primary walk-btn">Walking</button>
-        <button type="button" value="cycle" class="btn btn-primary cycle-btn">Cycling</button>
-        <button type="button" value="vehicle" class="btn btn-primary vehicle-btn">Vehicle</button>
-        <button type="button" value="transit" class="btn btn-primary transit-btn">Transit</button>
+        <button type="button" value="walk" class="btn btn-primary walk-btn"><i class="fas fa-walking"></i></button>
+        <button type="button" value="cycle" class="btn btn-primary cycle-btn"><i class="fas fa-biking"></i></button>
+        <button type="button" value="vehicle" class="btn btn-primary vehicle-btn"><i class="fas fa-car"></i></button>
+        <button type="button" value="transit" class="btn btn-primary transit-btn"><i class="fas fa-subway"></i></button>
         <!-- <button type="button" value="flights" class="btn btn-primary flights-btn">Flights</button> -->
     </section>
 
-    <section id="map-area" class="container">
-        <div id="directions-panel"></div>
+    <section id="dashboard">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem expedita iste accusantium rerum ad soluta in! Fugiat quibusdam tenetur eum veritatis nemo, nam expedita recusandae nesciunt earum officiis voluptatem alias.</p>
+    </section>
+
+    <section id="map-area">
+        <div id="directions-panel" class="overflow-auto"></div>
         <div id="map"></div>
     </section>
 
 </body>
 <script src="config.js"></script>
 <script src="maps.js"></script>
+<script src="route-selector.js"></script>
 </html>

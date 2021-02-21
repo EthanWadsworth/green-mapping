@@ -1,6 +1,19 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
 #map {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    bottom: 100px;
+    float: left;
+    right: 0;
     width: 100%;
-    height: 400px;
 }
 
 .map-area {
@@ -14,4 +27,156 @@
 
 .checkbox {
     display: block;
+}
+
+#directions-panel {
+    height: 100%;
+    float: right;
+    width: 25%;
+    min-width: 200px;
+    overflow: auto;
+    position: relative;
+    z-index: 2;
+    background: white;
+}
+
+.walk-btn, .cycle-btn, .vehicle-btn, .transit-btn {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 60%;
+    width: 100%;
+}
+
+#transportation-buttons {
+    z-index: 2;
+    position: absolute;
+    top: 20%;
+    left: 7%;
+}
+
+#dashboard {
+    position: absolute;
+    top: 45%;
+    left: 7%;
+    max-width: 200px;
+    background: white;
+}
+
+.searchbar-form {
+    z-index: 2;
+}
+
+@media print {
+    #map {
+      height: 500px;
+      margin: 0;
+    }
+  
+    #directions-panel {
+      float: none;
+      width: auto;
+    }
+  }
+
+#directions-panel {
+    font-family: "Roboto", "sans-serif";
+    line-height: 30px;
+    padding-left: 10px;
+}
+
+#directions-panel select,
+#directions-panel input {
+    font-size: 15px;
+}
+
+#directions-panel select {
+    width: 100%;
+}
+
+#directions-panel i {
+    font-size: 12px;
+}
+  
+
+/* copied code */
+
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+  height: 100%;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: "Roboto", "sans-serif";
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+#right-panel {
+  font-family: "Roboto", "sans-serif";
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+#right-panel select,
+#right-panel input {
+  font-size: 15px;
+}
+
+#right-panel select {
+  width: 100%;
+}
+
+#right-panel i {
+  font-size: 12px;
+}
+
+#right-panel {
+  height: 100%;
+  float: right;
+  width: 390px;
+  overflow: auto;
+}
+
+#map {
+  margin-right: 400px;
+}
+
+#floating-panel {
+  background: #fff;
+  padding: 5px;
+  font-size: 14px;
+  font-family: Arial;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
+  display: none;
+}
+
+@media print {
+  #map {
+    height: 500px;
+    margin: 0;
+  }
+
+  #right-panel {
+    float: none;
+    width: auto;
+  }
 }

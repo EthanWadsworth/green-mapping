@@ -3,6 +3,11 @@ let curr_start = "";
 let curr_dest = "";
 let curr_transport_method;
 let rough_paths_arr = [];
+let all_transport_methods = [];
+let transport_methods_data = {}; // global variable that stores all transport method data from A to B
+
+// TODO: - do not allow user to click on transportation buttons if they have not actually entered in any start and end yet
+
 
 var script = document.createElement('script');
 script.src = `https://maps.googleapis.com/maps/api/js?key=${api_key}&libraries=geometry,places&callback=initMap`;
@@ -73,10 +78,33 @@ window.initMap = function() {
             return;
         } 
 
+        let requestObj = {
+            origin: document.getElementById("starting-point").value,
+            destination: document.getElementById("destination").value,
+            travelMode: curr_transport_method,
+            provideRouteAlternatives: true,
+            transitOptions: {
+                modes: ['BUS', 'RAIL', 'TRAIN'],
+                routingPreference: 'FEWER_TRANSFERS'
+            },
+            drivingOptions: {
+                departureTime: new Date(Date.now()),  // for the time N milliseconds from now.
+                trafficModel: 'pessimistic'
+            }
+        };
+
         // plot/draw direction from point A selected to point B
         route_btn.removeAttribute('data-toggle');
         route_btn.removeAttribute('data-target');
-        calculateAndDisplayRoute(directionsService, directionsRenderer, starting_point, destination, curr_transport_method);
+
+        // If the start and end have not changed, then do not calculate data for all transport methods
+        if (starting_point == curr_start && destination == curr_dest) {
+            calculateAndDisplayRoute(directionsService, directionsRenderer, starting_point, destination, curr_transport_method);
+        } else {
+            calculateAllTransportationMethods(requestObj, directionsService, directionsRenderer, curr_transport_method);
+            curr_start = starting_point.value;
+            curr_dest = destination.value;
+        }
     }
 
     // test options for Autocomplete
@@ -138,8 +166,8 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, start, 
     // TODO do not reload/call endpoints if the current transport method is already loaded and endpoints have not changed
 
     let requestObj = {
-        origin: document.getElementById("starting-point").value,
-        destination: document.getElementById("destination").value,
+        origin: start.value,
+        destination: destination.value,
         travelMode: method,
         provideRouteAlternatives: true,
         transitOptions: {
@@ -151,50 +179,28 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, start, 
             trafficModel: 'pessimistic'
         }
     };
-
-    // {
-    //     origin: {
-    //         query: document.getElementById("starting-point").value,
-    //     },
-    //     destination: {
-    //         query: document.getElementById("destination").value,
-    //     },
-    //     provideRouteAlternatives: true, // gives back multiple routes if there are multiple
-    //     // might have to decide how th manage this based on user input on their desired travel method
-    //     travelMode: google.maps.TravelMode.DRIVING, // change according to transportation mode given
-    // },
+    console.log("in calc and display route");
 
     directionsService.route(requestObj,
 
         // callback to handle success or failure based on parameters above
         (response, status) => {
             if (status === "OK") {
+                // console.log(response) // what is stored in response?
+                // // TODO: add function to get data for valid response back
+                // computeOptimalRoute(response.routes, directionsService);
 
-                // test changing render color to green
-                // this works, but will only need to color the optimal route in the end
-                directionsRenderer.setMap(null);
-
-                directionsRenderer.setOptions({
-                    polylineOptions: {
-                        strokeColor: 'green'
-                    }
-                });
-
-                directionsRenderer.setMap(map);
-
-                directionsRenderer.setDirections(response);
-
-                // try and draw lines for each route manually
-                drawPolylines(response.routes);
-
-                console.log(response) // what is stored in response?
-                // TODO: add function to get data for valid response back
-                computeOptimalRoute(response.routes, directionsService);
+                drawDetailedDirections(directionsRenderer, response);
             } else {
                 window.alert("Directions request failed due to " + status);
             }
         }
     );
+    // changeSelectedRoute();
+    // console.log(document.querySelectorAll('[data-route-index]'));
+
+    // let result = calculateAllTransportationMethods(requestObj, directionsService, directionsRenderer, method);
+    // console.log(result);
 }
 
 // callback function for event listener for autocomplete - need to change so it works with both start and end
@@ -282,4 +288,53 @@ function drawPolylines(routes) {
             rough_paths_arr.push(paths);
         }
     }
+}
+
+// gets all data for all transportation methods
+function calculateAllTransportationMethods(requestObj, directionsService, directionsRenderer, desired_method) {
+
+    // all transport methods supported by Google maps API
+    let transport_methods = [
+        google.maps.TravelMode.WALKING, 
+        google.maps.TravelMode.BICYCLING, 
+        google.maps.TravelMode.TRANSIT, 
+        google.maps.TravelMode.DRIVING
+    ];
+
+    // go through every single one and compute 
+    transport_methods.forEach(method => {
+        requestObj.travelMode = method;
+        directionsService.route(requestObj,
+
+        // callback to handle success or failure based on parameters above
+        (response, status) => {
+            if (status === "OK") {
+                transport_methods_data[method] = response;
+                if (method == desired_method) {
+                    drawDetailedDirections(directionsRenderer, response);
+                }
+            } else {
+                console.log("Could not log data into transport_methods_data");
+            }
+        })
+    })
+
+    console.log(transport_methods_data);
+}
+
+function drawDetailedDirections(directionsRenderer, response) {
+    directionsRenderer.setMap(null);
+
+    directionsRenderer.setOptions({
+        polylineOptions: {
+            strokeColor: 'green'
+        }
+    });
+
+    directionsRenderer.setMap(map);
+
+    directionsRenderer.setDirections(response);
+
+    // try and draw lines for each route manually
+    drawPolylines(response.routes);
 }
