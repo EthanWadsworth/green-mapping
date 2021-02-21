@@ -2,7 +2,7 @@ function calculateCO2GramsPerMile(vehicle) {
     let ft1 = parseFloat(getVehicleAttribute(vehicle, "co2TailpipeGpm"));
     let ft2 = parseFloat(getVehicleAttribute(vehicle, "co2TailpipeAGpm"));
 
-    return Math.max(ft1, ft2);
+    return Math.max(ft1, ft2).toFixed(2);
 }
 
 function calculateGasConsumptionHW(vehicle, dist) {
@@ -26,8 +26,10 @@ function calculateGasConsumption(vehicle, dist) {
     let MPGft2 = parseFloat(getVehicleAttribute(vehicle, "combA08U"));
     let MPG = Math.max(MPGft1, MPGft2);
 
+    console.log(dist);
     console.log(MPG);
-    return dist / MPG;
+
+    return (dist / MPG).toFixed(2);
 }
 
 function generateSummary(vehicle, dist, time) {

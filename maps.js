@@ -69,6 +69,10 @@ window.initMap = function() {
         const carModel = document.getElementById("car-model");
         const carYear = document.getElementById("car-year");
 
+        car_data["make"] = carMake.value;
+        car_data["model"] = carModel.value;
+        car_data["year"] = carYear.value;
+
         let route_btn = document.getElementById("calc-route-btn");
 
         // check to make sure both text fields have content in them
@@ -308,7 +312,8 @@ function calculateAllTransportationMethods(requestObj, directionsService, direct
         directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[0], desired_method),
         directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[1], desired_method),
         directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[2], desired_method),
-        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[3], desired_method)
+        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[3], desired_method),
+        fetchVehicleData(car_data.make, car_data.model, car_data.year)
     ])
     .then(results => {
         transport_methods_data = results;
