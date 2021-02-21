@@ -4,8 +4,18 @@
     border-spacing: 0;
     width: 100%;
     border: 1px solid #ddd;
-    margin-top: 100px;
+    margin-top: 110px;
     overflow: auto;
+}
+
+#route-info-table-container {
+    padding-top: 700px;
+}
+
+@media (max-width: 800px) {
+    #route-info-table-container {
+        padding-top: 0px;
+    }
 }
 
 /* Style table headers and table data */

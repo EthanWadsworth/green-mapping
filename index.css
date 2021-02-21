@@ -1,9 +1,9 @@
-html,
+/* html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
-}
+} */
 
 
 #map {
@@ -50,13 +50,15 @@ body {
         width: 100%;
         float: none;
         z-index: 0;
+        margin-top: 55vh;
     }
 
     #map {
         display: block;
         /* position: absolute; */
-        top: 0px;
+        top: 5vh;
         height: 60vh;
+        bottom: 5vh;
     }
 }
 

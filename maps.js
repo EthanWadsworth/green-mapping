@@ -71,13 +71,13 @@ window.initMap = function() {
         // grab text fields 
         const starting_point = document.getElementById("starting-point");
         const destination = document.getElementById("destination");
-        const carMake = document.getElementById("car-make");
-        const carModel = document.getElementById("car-model");
-        const carYear = document.getElementById("car-year");
+        // const carMake = document.getElementById("car-make");
+        // const carModel = document.getElementById("car-model");
+        // const carYear = document.getElementById("car-year");
 
-        car_data["make"] = carMake.value;
-        car_data["model"] = carModel.value;
-        car_data["year"] = carYear.value;
+        // car_data["make"] = carMake.value;
+        // car_data["model"] = carModel.value;
+        // car_data["year"] = carYear.value;
 
         let route_btn = document.getElementById("calc-route-btn");
 
@@ -319,7 +319,7 @@ function calculateAllTransportationMethods(requestObj, directionsService, direct
         directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[1], desired_method),
         directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[2], desired_method),
         directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[3], desired_method),
-        fetchVehicleData(car_data.make, car_data.model, car_data.year)
+        // fetchVehicleData(car_data.make, car_data.model, car_data.year)
     ])
     .then(results => {
         transport_methods_data = results;
