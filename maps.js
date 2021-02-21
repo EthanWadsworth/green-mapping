@@ -2,6 +2,7 @@ let map;
 let curr_start = "";
 let curr_dest = "";
 let curr_transport_method;
+let rough_paths_arr = [];
 
 var script = document.createElement('script');
 script.src = `https://maps.googleapis.com/maps/api/js?key=${api_key}&libraries=geometry,places&callback=initMap`;
@@ -60,14 +61,21 @@ window.initMap = function() {
         const starting_point = document.getElementById("starting-point");
         const destination = document.getElementById("destination");
 
+        let route_btn = document.getElementById("calc-route-btn");
+
         // check to make sure both text fields have content in them
         if (!starting_point.value || !destination.value) {
             // do window alert
-            window.alert("Start point and destination cannot be blank!");
+            // window.alert("Start point and destination cannot be blank!");
+            // add modal data attribute so it can show 
+            // route_btn.setAttribute('data-toggle', 'modal')
+            // route_btn.setAttribute('data-target', '#locations-modal')
             return;
-        }
+        } 
 
         // plot/draw direction from point A selected to point B
+        route_btn.removeAttribute('data-toggle');
+        route_btn.removeAttribute('data-target');
         calculateAndDisplayRoute(directionsService, directionsRenderer, starting_point, destination, curr_transport_method);
     }
 
@@ -177,7 +185,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, start, 
                 directionsRenderer.setDirections(response);
 
                 // try and draw lines for each route manually
-                // drawPolylines(response.routes);
+                drawPolylines(response.routes);
 
                 console.log(response) // what is stored in response?
                 // TODO: add function to get data for valid response back
@@ -233,34 +241,45 @@ function computeOptimalRoute(routes, directionsService) {
     // }
 }
 
-// function drawPolylines(routes) {
-//     let polyLinesArr = [];
-//     for (let route in routes) {
-//         let polyline = [];
-//         for (let step in route.steps) {
-//             let point = step.start_location.Scopes[0]
-//             console.log(point)
-//             polyline.push({ lat: point.d, lng: point.e });
-//         }
-//         polyLinesArr.push(polyline);
-//     }
+// draws polylines for the other routes
+// lines drawn are extremely rough and simplified compared to the actual route provided by maps
+function drawPolylines(routes) {
 
-//     console.log(routes);
-//     console.log(routes[0].legs[0].steps);
-//     console.log(routes[0].legs[0].steps.start_point.lat.Scopes);
-//     console.log(polyLinesArr);
-//     for (let i = 0; i < polyLinesArr.length; i++) {
+    // check to see if there are paths being maintained internally and remove them
+    let polyLinesArr = [];
+    if (rough_paths_arr.length > 0) {
+        rough_paths_arr.forEach(path => {
+            path.setMap(null);
+        })
+    }
 
-//         if (polyLinesArr[i].length > 0) {
-//             const paths = new google.maps.Polyline({
-//                 path: polyLinesArr[i],
-//                 geodesic: true,
-//                 strokeColor: "#FF0000",
-//                 strokeOpacity: 1.0,
-//                 strokeWeight: 2,
-//             });
+    // loop through the steps in each path and append them to a list
+    routes.forEach(route => {
+        let polyline = [];
+        route.legs[0].steps.forEach(step => {
+            let poly_startpoint = step.start_location
+            let poly_endpoint = step.end_location
+            polyline.push(poly_startpoint);
+            polyline.push(poly_endpoint);
+        })
+
+        polyLinesArr.push(polyline);
+    })
+
+    // create the Polyline objects and add each to the map 
+    for (let i = 0; i < polyLinesArr.length; i++) {
+
+        if (polyLinesArr[i].length > 0) {
+            const paths = new google.maps.Polyline({
+                path: polyLinesArr[i],
+                geodesic: true,
+                strokeColor: "#FF0000",
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+            });
     
-//             paths.setMap(map);
-//         }
-//     }
-// }
+            paths.setMap(map);
+            rough_paths_arr.push(paths);
+        }
+    }
+}
