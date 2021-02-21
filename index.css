@@ -49,6 +49,14 @@ body {
         display: block;
         width: 100%;
         float: none;
+        z-index: 0;
+    }
+
+    #map {
+        display: block;
+        /* position: absolute; */
+        top: 0px;
+        height: 60vh;
     }
 }
 

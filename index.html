@@ -31,11 +31,23 @@
                 <label for="destination" class="sr-only">Start</label>
                 <input type="text" class="form-control" id="destination" placeholder="End">
             </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="car-make" class="sr-only">Make</label>
+                <input type="text" class="form-control" id="car-make" placeholder="Make">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="car-model" class="sr-only">Model</label>
+                <input type="text" class="form-control" id="car-model" placeholder="Model">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="car-year" class="sr-only">Year</label>
+                <input type="text" class="form-control" id="car-year" placeholder="Year">
+            </div>
             <button type="submit" class="btn btn-primary mb-2" id="calc-route-btn">Calculate Route</button>
         </form> -->
 
         
-        <div class="modal fade" id="locationsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="locationsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -53,7 +65,7 @@
                 </div>
             </div>
             </div>
-        </div>
+        </div> -->
         
     </section>
 
@@ -70,48 +82,9 @@
         <div id="map"></div>
     </section>
 
-    <table id="route-info-table">
-        <tr>
-            <th style="width:50%">Method of Transport</th>
-            <th>Distance (mi)</th>
-            <th>Expected Duration (hrs)</th>
-            <th>Expected Duration in Traffic (hrs)</th>
-            <th>Carbon Footprint (Moles of CO2)</th>
-            <th>Gas Used (gallons)</th>
-        </tr>
-        <tr>
-            <td><b>Car</b></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><b>Transit</b></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><b>Walking</b></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><b>Cycling</b></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
+    <div id="route-info-table-container" class="overflow-auto">
+
+    </div>
 
 </body>
 <script src="config.js"></script>

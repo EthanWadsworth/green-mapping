@@ -1,9 +1,11 @@
-table {
+#route-info-table {
     font-family: 'Open Sans', sans-serif;
     border-collapse: collapse;
     border-spacing: 0;
     width: 100%;
     border: 1px solid #ddd;
+    margin-top: 100px;
+    overflow: auto;
 }
 
 /* Style table headers and table data */
