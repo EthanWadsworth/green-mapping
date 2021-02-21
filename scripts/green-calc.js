@@ -10,7 +10,7 @@ function calculateGasConsumptionHW(vehicle, dist) {
     let hwMPGft2 = parseFloat(getVehicleAttribute(vehicle, "highwayA08U"));
     let hwMPG = Math.max(hwMPGft1, hwMPGft2);
 
-    return hwMPG / dist;
+    return dist / hwMPG;
 }
 
 function calculateGasConsumptionCity(vehicle, dist) {
@@ -18,7 +18,7 @@ function calculateGasConsumptionCity(vehicle, dist) {
     let cityMPGft2 = parseFloat(getVehicleAttribute(vehicle, "cityA08U"));
     let cityMPG = Math.max(cityMPGft1, cityMPGft2);
 
-    return cityMPG / dist;
+    return dist / cityMPG;
 }
 
 function calculateGasConsumption(vehicle, dist) {
@@ -26,7 +26,23 @@ function calculateGasConsumption(vehicle, dist) {
     let MPGft2 = parseFloat(getVehicleAttribute(vehicle, "combA08U"));
     let MPG = Math.max(MPGft1, MPGft2);
 
-    return MPG / dist;
+    console.log(MPG);
+    return dist / MPG;
+}
+
+function generateSummary(vehicle, dist, time) {
+
+    let hours = parseFloat(parseTime(time)).toFixed(2);
+    let miles = parseDistance(dist);
+    let co2Emitted = (calculateCO2GramsPerMile(vehicle) * miles / 44).toFixed(2);
+    let gasConsumption = (calculateGasConsumption(vehicle, miles)).toFixed(2);
+
+    let summary = "Time Cost: " + hours + " hours"
+              + "\nEnvironmental Cost: " + co2Emitted + " moles of CO2"
+              + "\nGas Cost: " + gasConsumption + " gallons of gas";
+
+
+    return summary;
 }
 
 /* TESTING */
@@ -36,9 +52,9 @@ function calculateGasConsumption(vehicle, dist) {
 //     let year = "2018";
 
 //     let data = await fetchVehicleData(model, make, year);
-//     console.log(data);
 //     let co2GramsPerMile = calculateCO2GramsPerMile(data);
-//     console.log(co2GramsPerMile);
+
+//     console.log(generateSummary(data, "100 mi", "3 hours 10 mins"));
 // }
     
 // calc();
