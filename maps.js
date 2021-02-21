@@ -13,7 +13,6 @@ var script = document.createElement('script');
 script.src = `https://maps.googleapis.com/maps/api/js?key=${api_key}&libraries=geometry,places&callback=initMap`;
 script.async = true;
 
-
 // Attach your callback function to the `window` object
 // main function to handle setup and all incoming requests
 window.initMap = function() {
@@ -301,39 +300,76 @@ function calculateAllTransportationMethods(requestObj, directionsService, direct
         google.maps.TravelMode.DRIVING
     ];
 
-    // go through every single one and compute 
-    transport_methods.forEach(method => {
-        requestObj.travelMode = method;
-        directionsService.route(requestObj,
+    Promise.all([
+        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[0], desired_method),
+        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[1], desired_method),
+        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[2], desired_method),
+        directionRoute(directionsRenderer, directionsService, requestObj, transport_methods[3], desired_method)
+    ])
+    .then(results => {
+        transport_methods_data = results;
+        console.log("after promise resolution");
+        console.log(transport_methods_data);
+    })
 
-        // callback to handle success or failure based on parameters above
-        (response, status) => {
+    // go through every single one and compute 
+    // asyncForEach(transport_methods, async (method) => {
+    //     requestObj.travelMode = method;
+    //     transport_methods_data[method] = await directionRoute(directionsRenderer, directionsService, requestObj, method, desired_method);
+    // })
+    console.log("outside promises");
+    console.log(transport_methods_data);
+    // transport_methods.forEach(async method => {
+    //     requestObj.travelMode = method;
+    //     transport_methods_data[method] = await directionRoute(directionsRenderer, directionsService, requestObj, method, desired_method);
+    //     // directionsService.route(requestObj,
+
+    //     // // callback to handle success or failure based on parameters above
+    //     // (response, status) => {
+    //     //     if (status === "OK") {
+    //     //         transport_methods_data[method] = response;
+    //     //         if (method == desired_method) {
+    //     //             drawDetailedDirections(directionsRenderer, response);
+    //     //         }
+    //     //     } else {
+    //     //         console.log("Could not log data into transport_methods_data");
+    //     //     }
+    //     // })
+    // })
+}
+
+// promise wrapper for calculateAllTransportationMethods
+const directionRoute = (directionsRenderer, directionsService, requestObj, method, desired_method) => {
+    return new Promise((resolve, reject) => {
+        directionsService.route(requestObj, (response, status) => {
             if (status === "OK") {
-                transport_methods_data[method] = response;
+                // transport_methods_data[method] = response;
                 if (method == desired_method) {
                     drawDetailedDirections(directionsRenderer, response);
+                    resolve(response);
                 }
+                resolve(response);
             } else {
+                reject(status);
                 console.log("Could not log data into transport_methods_data");
             }
         })
     })
-
-    console.log(transport_methods_data);
 }
 
-function drawDetailedDirections(directionsRenderer, response) {
-    directionsRenderer.setMap(null);
 
-    directionsRenderer.setOptions({
+async function drawDetailedDirections(directionsRenderer, response) {
+    await directionsRenderer.setMap(null);
+
+    await directionsRenderer.setOptions({
         polylineOptions: {
             strokeColor: 'green'
         }
     });
 
-    directionsRenderer.setMap(map);
+    await directionsRenderer.setMap(map);
 
-    directionsRenderer.setDirections(response);
+    await directionsRenderer.setDirections(response);
 
     // try and draw lines for each route manually
     drawPolylines(response.routes);
